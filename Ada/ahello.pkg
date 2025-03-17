@@ -1,0 +1,41 @@
+--
+--  Simple "Hello world!" type program
+--
+with longops, longio, floatops, floatio, math;
+package body ahello is
+  type uint16 is range 0 .. 2**16 - 1;
+  type int32 is range -(2**31) .. 2**31 - 1;
+  limit : constant Integer := 20;
+  i : Integer;
+  x : Float;
+  y : Float;
+
+begin
+  put("Hello world from Ada!");
+  New_Line;
+  for j in 0 .. limit loop
+    x := float(j);
+    y := math.sqrt(x);
+    Put(j);
+    Put("  ");
+    Put(j*j);
+    Put("  ");
+    Floatio.Put(y, 2, 4, 0);
+    New_Line;
+  end loop;
+  Put("Integer range: ");
+  Put(Integer'Last);
+  Put(" .. ");
+  put(Integer'First);
+  New_Line;
+  Put("Uint16 range: ");
+  Put(uint16'First);
+  Put(" .. ");
+  Put(uint16'Last);
+  New_Line;
+  Put("Int32 range: ");
+  Put(int32'First);
+  Put(" .. ");
+  Put(int32'Last);
+  New_Line;
+end AHELLO;

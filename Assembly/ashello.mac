@@ -1,0 +1,65 @@
+BDOS     EQU 5
+OUTSTR   EQU 9
+
+PRINT    MACRO STR
+         LXI D,STR
+         MVI C,OUTSTR
+         CALL BDOS
+         ENDM
+
+         CSEG
+         ORG 100H
+
+START::  PRINT MSG
+;
+;  Determine if running on 8080/8085 or Z-80.
+;  The parity flag is used as an overflow flag
+;  on the Z-80.
+;
+         MVI A,0C0H
+         ADI 0C1H
+         JPO PRINT80
+         PRINT MSG8080
+         JMP DONE
+PRINT80: PRINT MSGZ80
+;
+;  End of processor check.
+;
+EXTRN    TOHEX
+EXTRN    MUL8
+DONE:
+         MVI A,10H
+LOOP:
+         LXI H,HEXMSG
+         CALL TOHEX
+         PUSH PSW
+         MOV B,A
+         MOV C,A
+         CALL MUL8
+         LXI H,HEX2
+         MOV A,B
+         CALL TOHEX
+         LXI H,HEX3
+         MOV A,C
+         CALL TOHEX
+         PRINT HEXMSG
+         POP PSW
+         DCR A
+         JNZ LOOP
+EXIT:    RET
+CODEEND:
+
+         DSEG
+
+MSG:     DB "Hello world! from assembly"
+         DB 13,10,"$"
+MSGZ80:  DB "Code is running on a Z-80"
+         DB 13,10,"$"
+MSG8080: DB "Code is running on a 8080/8085"
+         DB 13,10,"$"
+HEXMSG:  DB 0,0,32,32
+HEX2:    DB 0,0
+HEX3:    DB 0,0
+         DB 13,10,"$"
+
+         END START

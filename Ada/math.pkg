@@ -1,0 +1,4 @@
+with floatops;
+package math is
+  function sqrt(x : in float) return float;
+end math;

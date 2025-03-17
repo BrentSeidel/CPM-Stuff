@@ -1,0 +1,47 @@
+         TITLE TOHEX - Convert register A to two hex digits
+         ENTRY TOHEX
+;
+; Convert a byte to hexidecimal representation
+; On entry register:
+;  A - Byte to be converted
+; HL - Pointer to two byte buffer for results,  Updated
+;      to point to end of buffer.
+;
+         CSEG
+TOHEX::  PUSH B
+         PUSH D
+         PUSH PSW
+; Convert first character
+         LXI B,0
+         LXI D,DIGITS
+         XCHG
+         ANI 0F0H
+         RRC
+         RRC
+         RRC
+         RRC
+         MOV C,A
+         DAD B
+         MOV A,M
+         XCHG
+         MOV M,A
+; Second character
+         INX H
+         POP PSW
+         PUSH PSW
+         LXI D,DIGITS
+         XCHG
+         ANI 0FH
+         MOV C,A
+         DAD B
+         MOV A,M
+         XCHG
+         MOV M,A
+         POP PSW
+         POP D
+         POP B
+         RET
+
+         DSEG
+DIGITS:  DB "0123456789ABCDEF"
+         END

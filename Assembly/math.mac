@@ -1,0 +1,253 @@
+     TITLE MATH - Mutiply B & C registers with result in BC.
+     ENTRY MUL8
+;
+;  8x8 multiply.  Inputs in registers B & C, result in BC.
+;
+      CSEG
+;
+MUL8::PUSH PSW
+      PUSH D
+      PUSH H
+;
+      XRA A
+      MOV H,A
+      MOV L,A
+      SHLD DATA
+      SHLD ACC
+; Step 1
+      LXI H,DATA
+      MOV M,B
+      MOV A,C
+      RAR
+      JNC L1      ; Check if add
+      PUSH PSW
+      MOV A,M
+      LXI H,ACC   ; Accumulator is already 0 so move instead of add
+      MOV M,A
+      POP PSW
+; Step 2
+L1:   LXI H,DATA
+      STC
+      CMC
+      PUSH PSW
+      MOV A,M     ; Shift data
+      RAL
+      MOV M,A
+      INX H       ; Next byte
+      MOV A,M
+      RAL
+      MOV M,A
+      POP PSW
+      RAR
+      JNC L2      ; Check if add
+      PUSH PSW
+      LXI H,DATA
+      LXI D,ACC
+      MOV A,M
+      XCHG        ; Swap HL and DE
+      ADD M
+      MOV M,A
+      XCHG        ; Swap HL and DE back
+      INX H
+      INX D       ; Point to next byte
+      MOV A,M
+      XCHG        ; Swap HL and DE
+      ADC M
+      MOV M,A
+      POP PSW
+; Step 3
+L2:   LXI H,DATA
+      STC
+      CMC
+      PUSH PSW
+      MOV A,M     ; Shift data
+      RAL
+      MOV M,A
+      INX H       ; Next byte
+      MOV A,M
+      RAL
+      MOV M,A
+      POP PSW
+      RAR
+      JNC L3      ; Check if add
+      PUSH PSW
+      LXI H,DATA
+      LXI D,ACC
+      MOV A,M
+      XCHG        ; Swap HL and DE
+      ADD M
+      MOV M,A
+      XCHG        ; Swap HL and DE back
+      INX H
+      INX D       ; Point to next byte
+      MOV A,M
+      XCHG        ; Swap HL and DE
+      ADC M
+      MOV M,A
+      POP PSW
+; Step 4
+L3:   LXI H,DATA
+      STC
+      CMC
+      PUSH PSW
+      MOV A,M     ; Shift data
+      RAL
+      MOV M,A
+      INX H       ; Next byte
+      MOV A,M
+      RAL
+      MOV M,A
+      POP PSW
+      RAR
+      JNC L4      ; Check if add
+      PUSH PSW
+      LXI H,DATA
+      LXI D,ACC
+      MOV A,M
+      XCHG        ; Swap HL and DE
+      ADD M
+      MOV M,A
+      XCHG        ; Swap HL and DE back
+      INX H
+      INX D       ; Point to next byte
+      MOV A,M
+      XCHG        ; Swap HL and DE
+      ADC M
+      MOV M,A
+      POP PSW
+; Step 5
+L4:   LXI H,DATA
+      STC
+      CMC
+      PUSH PSW
+      MOV A,M     ; Shift data
+      RAL
+      MOV M,A
+      INX H       ; Next byte
+      MOV A,M
+      RAL
+      MOV M,A
+      POP PSW
+      RAR
+      JNC L5      ; Check if add
+      PUSH PSW
+      LXI H,DATA
+      LXI D,ACC
+      MOV A,M
+      XCHG        ; Swap HL and DE
+      ADD M
+      MOV M,A
+      XCHG        ; Swap HL and DE back
+      INX H
+      INX D       ; Point to next byte
+      MOV A,M
+      XCHG        ; Swap HL and DE
+      ADC M
+      MOV M,A
+      POP PSW
+; Step 6
+L5:   LXI H,DATA
+      STC
+      CMC
+      PUSH PSW
+      MOV A,M     ; Shift data
+      RAL
+      MOV M,A
+      INX H       ; Next byte
+      MOV A,M
+      RAL
+      MOV M,A
+      POP PSW
+      RAR
+      JNC L6      ; Check if add
+      PUSH PSW
+      LXI H,DATA
+      LXI D,ACC
+      MOV A,M
+      XCHG        ; Swap HL and DE
+      ADD M
+      MOV M,A
+      XCHG        ; Swap HL and DE back
+      INX H
+      INX D       ; Point to next byte
+      MOV A,M
+      XCHG        ; Swap HL and DE
+      ADC M
+      MOV M,A
+      POP PSW
+; Step 7
+L6:   LXI H,DATA
+      STC
+      CMC
+      PUSH PSW
+      MOV A,M     ; Shift data
+      RAL
+      MOV M,A
+      INX H       ; Next byte
+      MOV A,M
+      RAL
+      MOV M,A
+      POP PSW
+      RAR
+      JNC L7      ; Check if add
+      PUSH PSW
+      LXI H,DATA
+      LXI D,ACC
+      MOV A,M
+      XCHG        ; Swap HL and DE
+      ADD M
+      MOV M,A
+      XCHG        ; Swap HL and DE back
+      INX H
+      INX D       ; Point to next byte
+      MOV A,M
+      XCHG        ; Swap HL and DE
+      ADC M
+      MOV M,A
+      POP PSW
+; Step 8
+L7:   LXI H,DATA
+      STC
+      CMC
+      PUSH PSW
+      MOV A,M     ; Shift data
+      RAL
+      MOV M,A
+      INX H       ; Next byte
+      MOV A,M
+      RAL
+      MOV M,A
+      POP PSW
+      RAR
+      JNC L8      ; Check if add
+      PUSH PSW
+      LXI H,DATA
+      LXI D,ACC
+      MOV A,M
+      XCHG        ; Swap HL and DE
+      ADD M
+      MOV M,A
+      XCHG        ; Swap HL and DE back
+      INX H
+      INX D       ; Point to next byte
+      MOV A,M
+      XCHG        ; Swap HL and DE
+      ADC M
+      MOV M,A
+      POP PSW
+; Done.  Clean up
+L8:   LXI H,ACC
+      MOV C,M     ; LSB of result
+      INX H
+      MOV B,M     ; MSB of result
+      POP H
+      POP D
+      POP PSW
+      RET
+;
+;  Workspace
+      DSEG
+DATA: DS 2
+ACC:  DS 2
+
+      END
