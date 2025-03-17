@@ -11,7 +11,7 @@ simulator.
 This will be a list of pointers to other sources of CP/M software, utilities,
 and documentation.
 * [Retrocomputing Archive](http://www.retroarchive.org) - A large source of CP/M (and other software)
-* [HUMONGOUS CP/M Software Archives](http://cpmarchives.classiccmp.org_ - Another large archive
+* [HUMONGOUS CP/M Software Archives](http://cpmarchives.classiccmp.org) - Another large archive
 * [CP/M Sources](http://www.cpm.z80.de/source.html) - Assembler source for CP/M 2.2 can be found here
 * [ASxxxx](https://github.com/0cjs/ASxxxx) - A large collection of assemblers and linker that run on the host system.  I used
 this to build the CP/M binary that then gets written to the disk image.
