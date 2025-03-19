@@ -1,6 +1,8 @@
        PROGRAM HELLO
 C  Data types
+       BYTE CLS(6)
        INTEGER COUNT
+       DATA CLS/27,'[','H',27,'[','J'/
 C  Define formats for output
 10     FORMAT(' Hello World from FORTRAN! ')
 15     FORMAT(' Enter count: ')
@@ -9,9 +11,9 @@ C  Define formats for output
 C Define formats for input
 35     FORMAT(I5)
 C  Print hello message
+       WRITE(1) CLS
        WRITE(1,10)
        WRITE(1,15)
-C      COUNT = 10
        READ(1,35) COUNT
 C  Loop with some math calculations and print results
        DO 40 I = 1,COUNT
